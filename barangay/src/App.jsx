@@ -17,7 +17,7 @@ function App() {
         <Toaster richColors  position="bottom-right" />
 <Routes>
 
-    <Route exact path="/" element={<Login />} />
+    <Route exact path="/" element={<Dashboard />} />
     <Route exact path="/dashboard" element={<Dashboard />} />
     <Route exact path="/information" element={<Information />} />
     <Route exact path="/officials" element={<Officials />} />

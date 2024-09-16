@@ -4,6 +4,7 @@ import Sidebar from "../component/Sidebar";
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import AddResidentModal from '../component/Modal/AddResidents';
+import EditResidentModal from '../component/Modal/EditResidents';
 
 const ManageResidents = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -90,7 +91,7 @@ const ManageResidents = () => {
                                         <td className="py-3 px-4">{resident.purok}</td>
                                         <td className="py-3 px-4">{resident.created_at}</td>
                                         <td className="py-3 px-4 text-center">
-                                            <button onClick={() => openModal(resident)} className="text-blue-500 hover:underline">Edit</button>
+                                        <button onClick={() => openModal(resident)} className="text-blue-500 hover:underline">Edit</button>
                                             <button className="text-red-500 hover:underline ml-4">Delete</button>
                                         </td>
                                     </tr>
@@ -101,6 +102,13 @@ const ManageResidents = () => {
                 </div>
             </div>
             {isModalOpen && <AddResidentModal isOpen={isModalOpen} onClose={closeModal} resident={selectedResident} />}
+            {selectedResident && (
+                <EditResidentModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    Resident={selectedResident}
+                />
+            )}
         </div>
     );
 };

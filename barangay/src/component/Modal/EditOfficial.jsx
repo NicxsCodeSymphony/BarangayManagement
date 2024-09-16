@@ -85,12 +85,11 @@ const EditOfficialModal = ({ isOpen, onClose, official }) => {
 
       // Add additional fields from the official object
       if (official) {
-        const { residents_id, position, status, created_at, updated_at } = official;
+        const { residents_id, position, status, created_at } = official;
         formData.append('residents_id', residents_id);
         formData.append('position', position);
         formData.append('status', status);
         formData.append('created_at', created_at);
-        formData.append('updated_at', updated_at);
       }
 
       // Log the FormData entries
@@ -106,7 +105,7 @@ const EditOfficialModal = ({ isOpen, onClose, official }) => {
         } else {
           toast.success(`${response.data.message}`);
           onClose();
-          window.location.reload()
+        //   window.location.reload()
         }
       } catch (error) {
         toast.error('Error updating official');

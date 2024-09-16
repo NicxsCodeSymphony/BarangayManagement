@@ -7,7 +7,7 @@ const defaultPhoto = 'https://via.placeholder.com/150?text=No+Photo'; // Default
 const AddResidentModal = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
         position: 'Regular',
-        position_type: '',  // State for position type
+        position_type: 'Netizen',
         first_name: '',
         middle_name: '',
         last_name: '',
@@ -205,39 +205,6 @@ const AddResidentModal = ({ isOpen, onClose }) => {
                                 )
                             ))}
                             <div>
-                                <label className="block text-gray-700 text-sm font-medium mb-2 capitalize">Position</label>
-                                <select
-                                    name="position"
-                                    value={formData.position}
-                                    onChange={(e) => {
-                                        handleChange(e);
-                                        if (e.target.value === 'Regular') {
-                                            setFormData({ ...formData, position_type: '' });
-                                        }
-                                    }}
-                                    className="border border-gray-300 px-4 py-2 rounded-lg w-full"
-                                >
-                                    <option value="">Regular</option>
-                                    <option value="Official">Official</option>
-                                </select>
-                                {formData.position === 'Official' && (
-                                    <div className="mt-2">
-                                        <label className="block text-gray-700 text-sm font-medium mb-2 capitalize">Position Type</label>
-                                        <select
-                                            name="position_type"
-                                            value={formData.position_type}
-                                            onChange={handleChange}
-                                            className="border border-gray-300 px-4 py-2 rounded-lg w-full"
-                                        >
-                                            <option value="">Select Position Type</option>
-                                            <option value="Captain">Captain</option>
-                                            <option value="Secretary">Secretary</option>
-                                            <option value="Treasurer">Treasurer</option>
-                                        </select>
-                                        {errors.position_type && <p className="text-red-500 text-sm">{errors.position_type}</p>}
-                                    </div>
-                                )}
-                                {errors.position && <p className="text-red-500 text-sm">{errors.position}</p>}
                             </div>
                         </div>
                         <div className="flex justify-end p-4 border-t border-gray-200">
