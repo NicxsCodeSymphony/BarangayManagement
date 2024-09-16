@@ -11,6 +11,16 @@ const ManageResidents = () => {
     const [residents, setResidents] = useState([]);
     const [selectedResident, setSelectedResident] = useState(null);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+    }
+
+
     const fetchData = () => {
         axios.get('http://localhost/Commision/BarangayManagementAPI/fetchResidents.php')
             .then(response => {
@@ -89,7 +99,7 @@ const ManageResidents = () => {
                                         <td className="py-3 px-4">{resident.gender}</td>
                                         <td className="py-3 px-4">{resident.civil_status}</td>
                                         <td className="py-3 px-4">{resident.purok}</td>
-                                        <td className="py-3 px-4">{resident.created_at}</td>
+                                        <td className="py-3 px-4">{formatDate(resident.created_at)}</td>
                                         <td className="py-3 px-4 text-center">
                                         <button onClick={() => openModal(resident)} className="text-blue-500 hover:underline">Edit</button>
                                             <button className="text-red-500 hover:underline ml-4">Delete</button>
@@ -101,12 +111,18 @@ const ManageResidents = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <AddResidentModal isOpen={isModalOpen} onClose={closeModal} resident={selectedResident} />}
+            {isModalOpen && <AddResidentModal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            resident={selectedResident}
+            onAddResident={fetchData}
+            />}
             {selectedResident && (
                 <EditResidentModal
                     isOpen={isModalOpen}
                     onClose={closeModal}
                     Resident={selectedResident}
+                    onResidentUpdated={fetchData}
                 />
             )}
         </div>

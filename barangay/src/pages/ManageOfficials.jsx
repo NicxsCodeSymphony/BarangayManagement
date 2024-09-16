@@ -12,7 +12,7 @@ const ManageOfficials = () => {
   const [selectedOfficial, setSelectedOfficial] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  useEffect(() => {
+  const fetchData = () => {
     axios.get('http://localhost/Commision/BarangayManagementAPI/fetchOfficials.php')
       .then(res => {
         setOfficials(res.data);
@@ -21,6 +21,10 @@ const ManageOfficials = () => {
         console.error('Error fetching officials:', error);
         toast.error('Error fetching officials');
       });
+  }
+
+  useEffect(() => {
+    fetchData()
   }, []);
 
   const handleAddOfficial = (newOfficial) => {
@@ -128,13 +132,14 @@ const ManageOfficials = () => {
         <AddOfficialModal
           isOpen={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
-          onAddOfficial={handleAddOfficial}
+          onAddOfficial={fetchData}
         />
         {selectedOfficial && (
           <EditOfficialModal
             isOpen={isEditModalOpen}
             onClose={() => setIsEditModalOpen(false)}
             official={selectedOfficial}
+            onEditOfficial={fetchData}
           />
         )}
       </div>

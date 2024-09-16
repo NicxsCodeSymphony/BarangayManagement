@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 const defaultPhoto = 'https://via.placeholder.com/150?text=No+Photo'; // Default placeholder image URL
 
-const AddResidentModal = ({ isOpen, onClose }) => {
+const AddResidentModal = ({ isOpen, onClose, onAddResident }) => {
     const [formData, setFormData] = useState({
         position: 'Regular',
         position_type: 'Netizen',
@@ -94,10 +95,14 @@ const AddResidentModal = ({ isOpen, onClose }) => {
                 const response = await axios.post('http://localhost/Commision/BarangayManagementAPI/addResidents.php', residentData);
                 console.log('Form Data submitted:', response.data);
                 onClose();
+                toast.success('Resident added successfully!');
+                if(onAddResident){
+                    onAddResident()
+                }
                 // Optionally, reset the form or provide feedback
             } catch (error) {
                 console.error('Error submitting form:', error);
-                // Handle error, show an error message to the user
+                toast.error('Error adding resident');
             }
         }
     };

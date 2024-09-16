@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FaTimes } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 const defaultPhoto = 'https://via.placeholder.com/150?text=No+Photo'; // Default placeholder image URL
 
-const AddOfficialModal = ({ isOpen, onClose }) => {
+const AddOfficialModal = ({ isOpen, onClose, onAddOfficial }) => {
     const [formData, setFormData] = useState({
         position: 'Official',
         position_type: '',
@@ -92,12 +93,15 @@ const AddOfficialModal = ({ isOpen, onClose }) => {
             // Uncomment the following block to enable form submission
             try {
                 const response = await axios.post('http://localhost/Commision/BarangayManagementAPI/addResidents.php', residentData);
-                console.log('Form Data submitted:', response.data);
+                toast.success('Resident added successfully!');
+                if(onAddOfficial){
+                    onAddOfficial()
+                }
                 onClose();
-                // Optionally, reset the form or provide feedback
+
             } catch (error) {
                 console.error('Error submitting form:', error);
-                // Handle error, show an error message to the user
+                toast.error('Error submitting form:', error);
             }
         }
     };

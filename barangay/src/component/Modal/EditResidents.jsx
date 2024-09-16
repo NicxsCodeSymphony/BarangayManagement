@@ -9,7 +9,7 @@ const positionTypes = [
   'Captain', 'Secretary', 'Treasurer', 'Councilor', 'Other'
 ];
 
-const EditResidentModal = ({ isOpen, onClose, Resident }) => {
+const EditResidentModal = ({ isOpen, onClose, Resident, onResidentUpdated  }) => {
   const [editResident, setEditResident] = useState({});
   const [photoPreview, setPhotoPreview] = useState(defaultPhoto);
   const [loading, setLoading] = useState(false);
@@ -100,11 +100,16 @@ const EditResidentModal = ({ isOpen, onClose, Resident }) => {
         const response = await axios.post('http://localhost/Commision/BarangayManagementAPI/updateResident.php', formData);
         if (response.data.status === 'success') {
           toast.success('Resident updated successfully!');
+          if(onResidentUpdated){
+            onResidentUpdated()
+          }
           onClose();
         } else {
           toast.success(response.data.message);
+          if(onResidentUpdated){
+            onResidentUpdated()
+          }
           onClose();
-          window.location.reload()
         }
       } catch (error) {
         toast.error('Error updating Resident');
