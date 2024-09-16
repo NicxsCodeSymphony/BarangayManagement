@@ -24,7 +24,7 @@ const ManageOfficials = () => {
   }
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
 
   const handleAddOfficial = (newOfficial) => {
@@ -52,22 +52,17 @@ const ManageOfficials = () => {
       });
   };
 
-  const handleDeleteOfficial = (officialId) => {
-    // Implement delete functionality
-    axios.post('http://localhost/Commision/BarangayManagementAPI/deleteOfficial.php', { official_id: officialId })
-      .then(res => {
-        if (res.data.status === 'success') {
-          toast.success('Official deleted successfully!');
-          setOfficials(officials.filter(official => official.official_id !== officialId));
-        } else {
-          toast.error(`Error deleting official: ${res.data.message}`);
-        }
-      })
-      .catch(error => {
-        toast.error('Error deleting official');
-        console.error('Error deleting official:', error);
-      });
-  };
+  const handleDelete = (official) => {
+    axios.delete(`http://localhost/Commision/BarangayManagementAPI/deleteData.php?id=${official}`)
+       .then(() => {
+            toast.success('Official deleted successfully');
+            fetchData();
+        })
+       .catch(error => {
+            console.error('Error deleting official:', error);
+            toast.error('Error deleting official');
+        });
+}
 
   return (
     <div className="flex h-screen">
@@ -84,50 +79,54 @@ const ManageOfficials = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
-            <thead className="bg-gray-200 text-gray-700">
-              <tr>
-                <th className="py-3 px-4 border-b border-gray-300 text-left">Photo</th>
-                <th className="py-3 px-4 border-b border-gray-300 text-left">Name</th>
-                <th className="py-3 px-4 border-b border-gray-300 text-left">Position</th>
-                <th className="py-3 px-4 border-b border-gray-300 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {officials.map(official => (
-                <tr key={official.official_id} className="hover:bg-gray-50 transition-colors">
-                  <td className="py-3 px-4 border-b border-gray-300 flex items-center justify-center">
-                    {official.image && (
-                      <img
-                        src={`http://localhost/Commision/BarangayManagementAPI/${official.image}`}
-                        alt="Official"
-                        className="w-16 h-16 object-cover rounded-full shadow-md"
-                      />
-                    )}
-                  </td>
-                  <td className="py-3 px-4 border-b border-gray-300 text-left">{official.first_name} {official.last_name}</td>
-                  <td className="py-3 px-4 border-b border-gray-300 text-left">{official.position}</td>
-                  <td className="py-3 px-4 border-b border-gray-300 flex space-x-3 justify-center">
-                    <button
-                      onClick={() => {
-                        setSelectedOfficial(official);
-                        setIsEditModalOpen(true);
-                      }}
-                      className="text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <FaEdit className="text-lg" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteOfficial(official.official_id)}
-                      className="text-red-600 hover:text-red-800 transition-colors"
-                    >
-                      <FaTrash className="text-lg" />
-                    </button>
-                  </td>
+          {officials.length === 0 ? (
+            <p className="text-center text-gray-500">There's no official added yet</p>
+          ) : (
+            <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+              <thead className="bg-gray-200 text-gray-700">
+                <tr>
+                  <th className="py-3 px-4 border-b border-gray-300 text-left">Photo</th>
+                  <th className="py-3 px-4 border-b border-gray-300 text-left">Name</th>
+                  <th className="py-3 px-4 border-b border-gray-300 text-left">Position</th>
+                  <th className="py-3 px-4 border-b border-gray-300 text-left">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {officials.map(official => (
+                  <tr key={official.official_id} className="hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 border-b border-gray-300 flex items-center justify-center">
+                      {official.image && (
+                        <img
+                          src={`http://localhost/Commision/BarangayManagementAPI/${official.image}`}
+                          alt="Official"
+                          className="w-16 h-16 object-cover rounded-full shadow-md"
+                        />
+                      )}
+                    </td>
+                    <td className="py-3 px-4 border-b border-gray-300 text-left">{official.first_name} {official.last_name}</td>
+                    <td className="py-3 px-4 border-b border-gray-300 text-left">{official.position}</td>
+                    <td className="py-3 px-4 border-b border-gray-300 flex space-x-3 justify-center">
+                      <button
+                        onClick={() => {
+                          setSelectedOfficial(official);
+                          setIsEditModalOpen(true);
+                        }}
+                        className="text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <FaEdit className="text-lg" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(official.residents_id)}
+                        className="text-red-600 hover:text-red-800 transition-colors"
+                      >
+                        <FaTrash className="text-lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         <AddOfficialModal
           isOpen={isAddModalOpen}

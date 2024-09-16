@@ -1,10 +1,10 @@
-// ManageResidents.js
 import React, { useState, useEffect } from 'react';
 import Sidebar from "../component/Sidebar";
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import AddResidentModal from '../component/Modal/AddResidents';
 import EditResidentModal from '../component/Modal/EditResidents';
+import { toast } from 'sonner';
 
 const ManageResidents = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,14 +12,13 @@ const ManageResidents = () => {
     const [selectedResident, setSelectedResident] = useState(null);
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString)
+        const date = new Date(dateString);
         return date.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
-        })
+        });
     }
-
 
     const fetchData = () => {
         axios.get('http://localhost/Commision/BarangayManagementAPI/fetchResidents.php')
@@ -44,6 +43,18 @@ const ManageResidents = () => {
         setIsModalOpen(false);
         setSelectedResident(null);
     };
+
+    const handleDelete = (resident) => {
+        axios.delete(`http://localhost/Commision/BarangayManagementAPI/deleteData.php?id=${resident}`)
+           .then(() => {
+                toast.success('Resident deleted successfully');
+                fetchData();
+            })
+           .catch(error => {
+                console.error('Error deleting resident:', error);
+                toast.error('Error deleting resident');
+            });
+    }
 
     return (
         <div className="flex">
@@ -86,42 +97,50 @@ const ManageResidents = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {residents.map((resident) => (
-                                    <tr key={resident.id} className="hover:bg-gray-50 transition-colors">
-                                        <td className="py-3 px-4">{resident.first_name} {resident.last_name}</td>
-                                        <td className="py-3 px-4">
-                                            <img
-                                                src={resident.image ? `http://localhost/Commision/BarangayManagementAPI/${resident.image}` : 'https://via.placeholder.com/150'}
-                                                alt="Resident"
-                                                className="w-16 h-16 rounded-full"
-                                            />
-                                        </td>
-                                        <td className="py-3 px-4">{resident.gender}</td>
-                                        <td className="py-3 px-4">{resident.civil_status}</td>
-                                        <td className="py-3 px-4">{resident.purok}</td>
-                                        <td className="py-3 px-4">{formatDate(resident.created_at)}</td>
-                                        <td className="py-3 px-4 text-center">
-                                        <button onClick={() => openModal(resident)} className="text-blue-500 hover:underline">Edit</button>
-                                            <button className="text-red-500 hover:underline ml-4">Delete</button>
-                                        </td>
+                                {residents.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="7" className="py-4 text-center text-gray-500">There are no residents added yet.</td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    residents.map((resident) => (
+                                        <tr key={resident.id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="py-3 px-4">{resident.first_name} {resident.last_name}</td>
+                                            <td className="py-3 px-4">
+                                                <img
+                                                    src={resident.image ? `http://localhost/Commision/BarangayManagementAPI/${resident.image}` : 'https://via.placeholder.com/150'}
+                                                    alt="Resident"
+                                                    className="w-16 h-16 rounded-full"
+                                                />
+                                            </td>
+                                            <td className="py-3 px-4">{resident.gender}</td>
+                                            <td className="py-3 px-4">{resident.civil_status}</td>
+                                            <td className="py-3 px-4">{resident.purok}</td>
+                                            <td className="py-3 px-4">{formatDate(resident.created_at)}</td>
+                                            <td className="py-3 px-4 text-center">
+                                                <button onClick={() => openModal(resident)} className="text-blue-500 hover:underline">Edit</button>
+                                                <button className="text-red-500 hover:underline ml-4" onClick={()=> handleDelete(resident.residents_id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            {isModalOpen && <AddResidentModal
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            resident={selectedResident}
-            onAddResident={fetchData}
-            />}
+            {isModalOpen && (
+                <AddResidentModal
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    resident={selectedResident}
+                    onAddResident={fetchData}
+                />
+            )}
             {selectedResident && (
                 <EditResidentModal
                     isOpen={isModalOpen}
                     onClose={closeModal}
-                    Resident={selectedResident}
+                    resident={selectedResident}
                     onResidentUpdated={fetchData}
                 />
             )}
