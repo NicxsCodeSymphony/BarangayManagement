@@ -140,7 +140,7 @@ const ManageResidents = () => {
                 <EditResidentModal
                     isOpen={isModalOpen}
                     onClose={closeModal}
-                    resident={selectedResident}
+                    Resident={selectedResident}
                     onResidentUpdated={fetchData}
                 />
             )}

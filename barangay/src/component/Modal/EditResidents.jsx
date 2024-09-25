@@ -19,6 +19,7 @@ const EditResidentModal = ({ isOpen, onClose, Resident, onResidentUpdated  }) =>
 
   useEffect(() => {
     if (Resident) {
+        console.log(Resident)
       const {  image, residents_id, position, position_type, created_at, updated_at, status, ...otherFields } = Resident;
       setEditResident(otherFields);
       setPhotoPreview(image ? `http://localhost/Commision/BarangayManagementAPI/${image}` : defaultPhoto);

@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $firstName = $_POST['first_name'];
     $middleName = $_POST['middle_name'];
     $lastName = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
     $suffix = $_POST['suffix'];
     $gender = $_POST['gender'];
     $birthDate = $_POST['birth_date'];
@@ -56,11 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Prepare SQL query
     $sql = "INSERT INTO residents (
-                position, position_type, first_name, middle_name, last_name, suffix, relationship,
+                position, position_type, first_name, middle_name, last_name, email, password, suffix, relationship,
                 gender, birth_date, birth_place, age, civil_status, nationality, religion, occupation,
                 contact, pwd_status, pwd_id_no, education, purok, barangay, senior_citizen, image, created_at
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()
             )";
 
     $stmt = $conn->prepare($sql);
@@ -71,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Bind parameters - Ensure that types are correctly specified
     $stmt->bind_param(
-        "sssssssssssssssssssssss",
-        $position, $positionType, $firstName, $middleName, $lastName, $suffix, $relationship,
+        "sssssssssssssssssssssssss",
+        $position, $positionType, $firstName, $middleName, $lastName, $email, $password,  $suffix, $relationship,
         $gender, $birthDate, $birthPlace, $age, $civilStatus, $nationality, $religion, $occupation,
         $contact, $pwdStatus, $pwdIdNo, $education, $purok, $barangay, $seniorCitizen, $imagePath
     );

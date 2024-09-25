@@ -12,6 +12,8 @@ const AddOfficialModal = ({ isOpen, onClose, onAddOfficial }) => {
         first_name: '',
         middle_name: '',
         last_name: '',
+        email: '',
+        password: '',
         suffix: '',
         gender: '',
         birth_date: '',

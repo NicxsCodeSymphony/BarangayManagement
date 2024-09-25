@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { FaHome, FaUserTie, FaUsers, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaHome, FaUserTie, FaUsers, FaChevronDown, FaChevronUp, FaSignOutAlt } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const [isOfficialsOpen, setOfficialsOpen] = useState(false);
   const [isResidentsOpen, setResidentsOpen] = useState(false);
+  const navigate = useNavigate(); // Hook to navigate
 
   const toggleOfficials = () => setOfficialsOpen(!isOfficialsOpen);
   const toggleResidents = () => setResidentsOpen(!isResidentsOpen);
+
+  const handleLogout = () => {
+    // Remove the token from local storage
+    localStorage.removeItem('token');
+    // Redirect to the login page
+    navigate('/');
+  };
 
   return (
     <div className="w-72 h-screen bg-gray-900 text-white shadow-lg">
@@ -64,7 +73,7 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="manage-residents" className="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out">
+                  <a href="/manage-residents" className="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out">
                     <span className="ml-4 text-md">Manage Residents</span>
                   </a>
                 </li>
@@ -72,6 +81,13 @@ const Sidebar = () => {
             </div>
           </li>
         </ul>
+        <button
+          onClick={handleLogout}
+          className="flex items-center px-4 py-3 rounded-lg hover:bg-red-600 transition duration-300 ease-in-out mt-auto w-full"
+        >
+          <FaSignOutAlt className="text-2xl text-red-300" />
+          <span className="ml-4 text-lg font-medium">Logout</span>
+        </button>
       </div>
     </div>
   );

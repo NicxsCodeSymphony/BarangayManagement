@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 06:42 AM
+-- Generation Time: Sep 16, 2024 at 05:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -82,15 +82,6 @@ CREATE TABLE `residents` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `residents`
---
-
-INSERT INTO `residents` (`residents_id`, `position`, `position_type`, `first_name`, `middle_name`, `last_name`, `suffix`, `relationship`, `gender`, `birth_date`, `birth_place`, `age`, `civil_status`, `nationality`, `religion`, `occupation`, `contact`, `pwd_status`, `pwd_id_no`, `education`, `purok`, `barangay`, `senior_citizen`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'regular', '', 'John Nico', 'Mirnday', 'Edisan', 'None', 'Child', 'Male', '2024-09-11', 'Bogo City, Cebu', 22, 'Single', 'Filipino', 'Roman Catholic', 'Student', '09128398', 'No', '', 'IT Student', 'Diamond', 'Bungtod', 'No', 'uploads/residents/1724803608635.jpg', 'Active', '2024-09-15 12:41:39', '2024-09-15 12:41:39'),
-(6, 'Official', 'Captain', 'Jolina', 'Sopsop', 'Escultor', 'None', 'Child', 'Female', '2024-07-25', 'Masbate', 21, 'Single', 'Filipino', 'Roman Catholic', 'Student', '09128398', 'No', '', 'IT Student', 'Diamond', 'Masmas', 'No', 'uploads/officials/inspector.png', 'Active', '2024-09-15 12:52:05', '2024-09-15 14:19:41'),
-(8, 'Official', 'Secretary', 'Dhaniel', 'Lapa', 'Malinao', 'None', 'Father', 'Male', '2002-02-26', 'Bogo City, Cebu', 22, 'Single', 'Filipino', 'Roman Catholic', 'Student', '09128398', 'No', '', 'IT Student', 'Area', 'Pelaez', 'No', 'uploads/officials/inspector.png', 'Active', '2024-09-15 13:32:46', '2024-09-15 13:32:46');
-
---
 -- Indexes for dumped tables
 --
 
@@ -120,7 +111,7 @@ ALTER TABLE `barangay_info`
 -- AUTO_INCREMENT for table `residents`
 --
 ALTER TABLE `residents`
-  MODIFY `residents_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `residents_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

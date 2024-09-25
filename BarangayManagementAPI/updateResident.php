@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
     $suffix = $_POST['suffix'];
     $gender = $_POST['gender'];
     $birth_date = $_POST['birth_date'];
@@ -51,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 first_name = '$first_name',
                 middle_name = '$middle_name',
                 last_name = '$last_name',
+                email = '$email',
+                password = '$password',
                 suffix = '$suffix',
                 gender = '$gender',
                 birth_date = '$birth_date',
@@ -76,6 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 first_name = '$first_name',
                 middle_name = '$middle_name',
                 last_name = '$last_name',
+                email = '$email',
+                password = '$password',
                 suffix = '$suffix',
                 gender = '$gender',
                 birth_date = '$birth_date',
