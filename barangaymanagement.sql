@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 05:48 PM
+-- Generation Time: Sep 25, 2024 at 05:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -58,6 +58,8 @@ CREATE TABLE `residents` (
   `first_name` varchar(50) NOT NULL,
   `middle_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
   `suffix` varchar(10) DEFAULT NULL,
   `relationship` enum('Mother','Father','Child','Other') NOT NULL,
   `gender` enum('Male','Female','Other') NOT NULL,
@@ -80,6 +82,14 @@ CREATE TABLE `residents` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `residents`
+--
+
+INSERT INTO `residents` (`residents_id`, `position`, `position_type`, `first_name`, `middle_name`, `last_name`, `email`, `password`, `suffix`, `relationship`, `gender`, `birth_date`, `birth_place`, `age`, `civil_status`, `nationality`, `religion`, `occupation`, `contact`, `pwd_status`, `pwd_id_no`, `education`, `purok`, `barangay`, `senior_citizen`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'Regular', 'Netizen', 'asd', 'asd', 'asd', '', '', 'Jr.', 'Child', 'Female', '2024-09-06', 'asd', 12, 'Divorced', 'asd', 'asd', 'asd', 'asd', 'No', '', 'asd', 'asd', 'asd', 'No', 'uploads/residents/logo.png', 'Active', '2024-09-18 13:01:33', '2024-09-18 13:01:33'),
+(6, 'Official', 'Captain', 'smaple', 'smaple', 'smaple', 'sample@gmail.com', 'sample123', 'Jr.', 'Father', 'Female', '2024-09-02', 'Bogo City, Cebu', 22, 'Single', 'Filipino', 'asd', 'Student', '09128398', 'No', '0', 'IT Student', 'Yeah', 'asd', 'No', 'uploads/officials/setup.png', 'Active', '2024-09-24 11:32:33', '2024-09-24 11:36:19');
 
 --
 -- Indexes for dumped tables
@@ -111,7 +121,7 @@ ALTER TABLE `barangay_info`
 -- AUTO_INCREMENT for table `residents`
 --
 ALTER TABLE `residents`
-  MODIFY `residents_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `residents_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
